@@ -5,6 +5,7 @@ function TestReact(props) {
   return (
     <div>
         TestReact component
+        {props.data}
     </div>
   );
 }

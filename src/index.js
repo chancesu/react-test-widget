@@ -8,4 +8,4 @@ import Widget from './Widget';
 // });
 
 window._jandiWidget = Widget;
-
+console.log('react in');

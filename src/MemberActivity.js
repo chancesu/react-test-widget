@@ -1,34 +1,84 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import 'tui-chart/dist/tui-chart.css'
+import TuiChart from 'tui-chart';
+import {LineChart, PieChart} from '@toast-ui/react-chart'
 
-const MemberActivity = () =>{
+// 멤버활동 정보
+const line_white_theme = {
+    series: {
+        colors: [
+        '#00C473',
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(201, 203, 207)'
+        ]
+    }
+};
+let line_theme = line_white_theme; 
+TuiChart.registerTheme('lineTheme', line_theme);
+
+const line_options = {
+    chart: {
+      width: '100%',
+      height: 250,
+      format: '100'
+    },
+    xAxis: {
+      type: 'datetime',
+      dateFormat: 'MM/DD',
+    },
+    series: {
+      strokeWidth: 2,
+      showDot: true,
+      stackType: 'normal',
+      pointWidth: 3,
+      animation: {
+        duration: 0 
+      }
+    },
+    tooltip: {
+      align: 'center top',
+      template: function(category, item, categoryTimestamp) {
+        // return hoverPie(category, item,categoryTimestamp);
+      }
+    },
+    legend: {
+      visible: false
+    },
+    chartExportMenu: {
+      visible: false
+    },
+    theme: 'lineTheme'
+  };
+
+  const line_data = {
+    categories: ['12/28/2019', '12/30/2020', '01/01/2020', '01/03/2020', '01/05/2020', '01/08/2020', '01/10/2020', '01/12/2020', '01/14/2020', '01/16/2020', '01/17/2020', '01/18/2020', '01/19/2020', '01/20/2020', '01/21/2020', '01/22/2020', '01/23/2020', '01/24/2020', '01/25/2020', '01/26/2020'],
+    series: [
+      {
+        name: 'DAU',
+        data: [400, 500, 500, 510, 522, 512, 540, 532, 555, 560, 400, 500, 500, 0, 0, 512, 540, 532, 555, 560]
+      }
+    ]
+  };
+
+const MemberActivity = (props) =>{
+    console.log('MemberActivity 들어옴');
+    
+  useEffect(() => {
+    console.log('MemberActivity 값 전달됨',props);
+  }, [props])
+
     return(
-        <div className="jnd-admin-contents-item">
-            >>>> 리액트에서 불러온 코드
-            <h3 className="item-title">
-            멤버 활동 정보
-            <div className="item-info jnd-tooltip-toggle">
-            <i className="prefix icon-info-fill"></i>
-            <span className="jnd-tooltip tooltip-black b-l">
-                <span className="tooltip-desc">일별(DAU) 또는 월간(MAU)팀 멤버들의 활동 정보</span>
-            </span>
-            </div>
-            <a href="#none">세부정보</a>
-            </h3>
-
-            <div className="item-divider"></div>
-            <ul className="mini-tab">
-                <li className="active">
-                    <button type="button" className="tab-title">DAU</button>
-                </li>
-                <li>
-                    <button type="button" className="tab-title">MAU</button>
-                </li>
-            </ul>
-            <div className="chart-wrap" id="chart-area">
-                <div className="big jnd-connect-loading-container">
-                    <div className="loading_bar"><span class="three-quarters-loader jnd-three-quarters-loader"></span></div>
-                </div>
-            </div>
+        <div className="chart-wrap" id="chart-area">
+            그래프그리자
+            <LineChart
+                data={line_data} 
+                options={line_options} 
+            />
         </div>
     )
 }
